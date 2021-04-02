@@ -24,7 +24,7 @@ namespace PoC.Calendar.WASM.Server
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddDbContext<CalendarDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("TravelAgentConnection")));
+      services.AddDbContext<CalendarDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CalendarDBConnection")));
       services.AddControllersWithViews();
       services.AddRazorPages();
     }

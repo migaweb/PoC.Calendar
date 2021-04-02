@@ -1,0 +1,27 @@
+﻿version: '3.8'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: rabbit1
+    ports:
+      - 15672:15672
+      - 5672:5672
+    labels:
+      NAME: some-rabbit
+    volumes:
+      - rabbitmqdata:/var/lib/rabbitmq
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: pa55w0rd!
+      MSSQL_PID: Express
+    ports:
+      - 1433:1433
+    volumes:
+      - sqldata:/var/opt/mssql/data
+
+volumes:
+  sqldata:
+  rabbitmqdata:

@@ -1,0 +1,5 @@
+Add migration
+dotnet ef migrations add InitialCreate --context CalendarDbContext -s ..\PoC.Calendar.WASM\Server --verbose
+
+Update database
+dotnet ef database update --context CalendarDbContext -s ..\PoC.Calendar.WASM\Server --verbose

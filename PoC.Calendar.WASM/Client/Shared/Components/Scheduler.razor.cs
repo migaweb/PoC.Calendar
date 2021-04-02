@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using PoC.Calendar.WASM.Client.DataAccess;
 using PoC.Calendar.WASM.Client.Pages;
 using PoC.Calendar.WASM.Shared;
 using Radzen;
@@ -14,20 +15,21 @@ namespace PoC.Calendar.WASM.Client.Shared.Components
   {
     [Inject]
     public DialogService DialogService { get; set; }
-    
+
+    [Inject]
+    public IAppointmentsRepository AppointmentsRepository { get; set; }
+
+    public IList<Appointment> Appointments { get; set; } = new List<Appointment>();
+
     private RadzenScheduler<Appointment> scheduler;
     Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
 
-    IList<Appointment> appointments = new List<Appointment>
+    async Task LoadData(SchedulerLoadDataEventArgs args)
     {
-    new Appointment { Start = DateTime.Today.AddDays(-2), End = DateTime.Today.AddDays(-2), Text = "Birthday" },
-    new Appointment { Start = DateTime.Today.AddDays(-11), End = DateTime.Today.AddDays(-10), Text = "Day off" },
-    new Appointment { Start = DateTime.Today.AddDays(-10), End = DateTime.Today.AddDays(-8), Text = "Work from home" },
-    new Appointment { Start = DateTime.Today.AddHours(10), End = DateTime.Today.AddHours(12), Text = "Online meeting" },
-    new Appointment { Start = DateTime.Today.AddHours(10), End = DateTime.Today.AddHours(13), Text = "Skype call" },
-    new Appointment { Start = DateTime.Today.AddHours(14), End = DateTime.Today.AddHours(14).AddMinutes(30), Text = "Dentist appointment" },
-   
-    };
+      var startDate = args.Start;
+      var endDate = args.End;
+      Appointments = await AppointmentsRepository.GetAppointmentsAsync(startDate, endDate);
+    }
 
     async Task OnSlotSelect(SchedulerSlotSelectEventArgs args)
     {
@@ -38,7 +40,7 @@ namespace PoC.Calendar.WASM.Client.Shared.Components
 
       if (data != null)
       {
-        appointments.Add(data);
+        Appointments.Add(data);
         // Either call the Reload method or reassign the Data property of the Scheduler
         await scheduler.Reload();
       }

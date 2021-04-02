@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PoC.Calendar.Data;
+using PoC.Calendar.WASM.Server.Profiles;
 using System.Linq;
 
 namespace PoC.Calendar.WASM.Server
@@ -27,6 +28,8 @@ namespace PoC.Calendar.WASM.Server
       services.AddDbContext<CalendarDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CalendarDBConnection")));
       services.AddControllersWithViews();
       services.AddRazorPages();
+
+      services.AddAutoMapper(typeof(MapperProfiles));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

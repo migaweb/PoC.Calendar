@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using PoC.Calendar.WASM.Client.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -21,6 +22,8 @@ namespace PoC.Calendar.WASM.Client
 
       builder.Services.AddScoped<Radzen.DialogService>();
       builder.Services.AddScoped<Radzen.NotificationService>();
+
+      builder.Services.AddScoped<IAppointmentsRepository, AppointmentsRepository>();
 
       await builder.Build().RunAsync();
     }

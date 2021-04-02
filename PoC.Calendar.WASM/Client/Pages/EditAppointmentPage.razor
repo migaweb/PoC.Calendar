@@ -1,6 +1,8 @@
 ﻿@using PoC.Calendar.WASM.Shared
 
 @inject DialogService DialogService
+@inject DataAccess.IAppointmentsRepository AppointmentReporsitory
+@inject NotificationService NotificationService
 
 <RadzenTemplateForm TItem="Appointment" Data="@model" Submit=@OnSubmit>
     <div class="row" style="margin-bottom: 16px">
@@ -33,23 +35,43 @@
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col">
+            <RadzenButton ButtonType="ButtonType.Button" Text="Delete" Click="DeleteAppointment" />
             <RadzenButton ButtonType="ButtonType.Submit" Text="Save" />
         </div>
     </div>
 </RadzenTemplateForm>
 @code {
-    [Parameter]
-    public Appointment Appointment { get; set; }
+  [Parameter]
+  public Appointment Appointment { get; set; }
 
-    Appointment model = new Appointment();
+  Appointment model = new Appointment();
 
-    protected override void OnParametersSet()
-    {
-        model = Appointment;
-    }
+  protected override void OnParametersSet()
+  {
+      model = Appointment;
+  }
 
-    void OnSubmit(Appointment model)
-    {
-        DialogService.Close(model);
-    }
+  async Task DeleteAppointment()
+  {
+      var result = await AppointmentReporsitory.DeleteAppointment(Appointment);
+
+      if (!result)
+      {
+          NotificationService.Notify(new NotificationMessage
+          {
+              Severity = NotificationSeverity.Warning,
+              Detail = "An error occured on the server. The appointment was not deleted.",
+              Duration = 30000,
+              Summary = "Error"
+          });
+
+      }
+
+      DialogService.Close(null);
+  }
+
+  void OnSubmit(Appointment model)
+  {
+      DialogService.Close(model);
+  }
 }

@@ -16,7 +16,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		notes.txt = notes.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Poc.Calendar.Infra", "Poc.Calendar.Infra\Poc.Calendar.Infra.csproj", "{69229117-769E-4386-BF66-08877EAD358B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Poc.Calendar.Infra", "Poc.Calendar.Infra\Poc.Calendar.Infra.csproj", "{69229117-769E-4386-BF66-08877EAD358B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoC.Calendar.Common", "PoC.Calendar.Common\PoC.Calendar.Common.csproj", "{1352DC02-44DB-43DB-9A46-3D84B571E22D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +46,10 @@ Global
 		{69229117-769E-4386-BF66-08877EAD358B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69229117-769E-4386-BF66-08877EAD358B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69229117-769E-4386-BF66-08877EAD358B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1352DC02-44DB-43DB-9A46-3D84B571E22D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1352DC02-44DB-43DB-9A46-3D84B571E22D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1352DC02-44DB-43DB-9A46-3D84B571E22D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1352DC02-44DB-43DB-9A46-3D84B571E22D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

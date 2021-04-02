@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PoC.Calendar.WASM.Shared
+namespace PoC.Calendar.Common.Settings
 {
-  public class Appointment : AppointmentBase
+  public class RabbitMQSettings
   {
-    public int Id { get; set; }
+    public string Host { get; init; }
   }
 }

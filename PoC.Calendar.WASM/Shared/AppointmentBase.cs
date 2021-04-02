@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace PoC.Calendar.WASM.Shared
 {
-  public class Appointment : AppointmentBase
+  public class AppointmentBase
   {
-    public int Id { get; set; }
+    public DateTime Start { get; set; }
+    public DateTime End { get; set; }
+    public string Text { get; set; }
   }
 }

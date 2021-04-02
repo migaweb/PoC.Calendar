@@ -6,8 +6,8 @@ namespace PoC.Calendar.WASM.Server.Profiles
   {
     public MapperProfiles()
     {
-      CreateMap<Data.Model.Appointment, Shared.Appointment>().ReverseMap();
-
+      CreateMap<Data.Model.Appointment, Shared.Appointment>();
+      CreateMap<Shared.AppointmentBase, Data.Model.Appointment>();
     }
   }
 }

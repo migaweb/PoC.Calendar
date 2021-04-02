@@ -13,12 +13,18 @@ namespace PoC.Calendar.WASM.Client.Shared.Components
 {
   public partial class Scheduler : ComponentBase
   {
+    #region Injections
+    
     [Inject]
     public DialogService DialogService { get; set; }
 
     [Inject]
+    public NotificationService NotificationService { get; set; }
+
+    [Inject]
     public IAppointmentsRepository AppointmentsRepository { get; set; }
 
+    #endregion
     public IList<Appointment> Appointments { get; set; } = new List<Appointment>();
 
     private RadzenScheduler<Appointment> scheduler;
@@ -40,9 +46,24 @@ namespace PoC.Calendar.WASM.Client.Shared.Components
 
       if (data != null)
       {
-        Appointments.Add(data);
-        // Either call the Reload method or reassign the Data property of the Scheduler
-        await scheduler.Reload();
+        var appointment = await AppointmentsRepository.AddAppointment(data);
+
+        if (appointment != null)
+        {
+          Appointments.Add(appointment);
+          // Either call the Reload method or reassign the Data property of the Scheduler
+          await scheduler.Reload();
+        }
+        else
+        {
+          NotificationService.Notify(new NotificationMessage 
+          { 
+            Severity = NotificationSeverity.Warning, 
+            Detail = "An error occured on the server. The appointment was not added.",
+            Duration = 30000,
+            Summary = "Error"
+          });
+        }
       }
     }
 
@@ -50,9 +71,26 @@ namespace PoC.Calendar.WASM.Client.Shared.Components
     {
       Console.WriteLine($"AppointmentSelect: Appointment={args.Data.Text}");
 
-      await DialogService.OpenAsync<EditAppointmentPage>("Edit Appointment", new Dictionary<string, object> { { "Appointment", args.Data } });
+      var result = await DialogService.OpenAsync<EditAppointmentPage>("Edit Appointment", new Dictionary<string, object> { { "Appointment", args.Data } });
 
-      await scheduler.Reload();
+      if (result == null)
+      {
+        // Deleted
+        await scheduler.Reload();
+        return;
+      }
+      else if ( !(await AppointmentsRepository.UpdateAppointment(args.Data)) )
+      {
+        NotificationService.Notify(new NotificationMessage
+        {
+          Severity = NotificationSeverity.Warning,
+          Detail = "An error occured on the server. The appointment was not updated.",
+          Duration = 30000,
+          Summary = "Error"
+        });
+
+        return;
+      }
     }
 
     void OnAppointmentRender(SchedulerAppointmentRenderEventArgs<Appointment> args)

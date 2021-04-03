@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using PoC.Calendar.Common.Settings;
 using PoC.Calendar.Data;
 using System;
 using System.Collections.Generic;
@@ -16,11 +18,13 @@ namespace PoC.Calendar.WASM.Server.Controllers
   {
     private readonly CalendarDbContext _context;
     private readonly IMapper _mapper;
+    private readonly int _calendarId;
 
-    public AppointmentsController(CalendarDbContext context, IMapper mapper)
+    public AppointmentsController(CalendarDbContext context, IMapper mapper, IOptions<CalendarSettings> config)
     {
       _context = context;
       _mapper = mapper;
+      _calendarId = config.Value.CalendarId;
     }
     [HttpGet]
     public async Task<IActionResult> GetAllAppointments()
@@ -41,6 +45,7 @@ namespace PoC.Calendar.WASM.Server.Controllers
       return Ok(_mapper.Map<Shared.Appointment>(appointmentEntity));
     }
 
+    // Saved on cloud, pushed to UI after db update.
     [HttpPost]
     public async Task<IActionResult> CreateAppointment(Shared.AppointmentBase appointment)
     {
@@ -53,6 +58,7 @@ namespace PoC.Calendar.WASM.Server.Controllers
                             _mapper.Map<Shared.Appointment>(appointmentEntity));
     }
 
+    // Saved on cloud, pushed to UI after db update.
     [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateAppointment(int id, [FromBody] Shared.AppointmentBase appointment)
     {
@@ -68,6 +74,7 @@ namespace PoC.Calendar.WASM.Server.Controllers
       return NoContent();
     }
 
+    // Saved on cloud, pushed to UI after db update.
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteAppointment(int id)
     {

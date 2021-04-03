@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PoC.Calendar.Data;
+using PoC.Calendar.WASM.Shared;
 
 namespace PoC.Calendar.Api.Profiles
 {
@@ -7,8 +8,8 @@ namespace PoC.Calendar.Api.Profiles
   {
     public MapperProfiles()
     {
-      CreateMap<Data.Model.Event, Dtos.EventDto>();
-      CreateMap<Dtos.EventBaseDto, Data.Model.Event>();
+      CreateMap<Data.Model.Event, EventDto>();
+      CreateMap<EventBaseDto, Data.Model.Event>();
     }
   }
 }

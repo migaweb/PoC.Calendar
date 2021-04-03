@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PoC.Calendar.Common.Settings;
 using PoC.Calendar.Data;
+using PoC.Calendar.WASM.Server.CloudStore;
 using PoC.Calendar.WASM.Server.Profiles;
 using System.Linq;
 
@@ -30,6 +31,8 @@ namespace PoC.Calendar.WASM.Server
       services.AddDbContext<CalendarDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CalendarDBConnection")));
       services.AddControllersWithViews();
       services.AddRazorPages();
+
+      services.AddScoped<IEventsApi, EventsApi>();
 
       services.AddAutoMapper(typeof(MapperProfiles));
     }

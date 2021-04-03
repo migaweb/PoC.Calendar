@@ -10,8 +10,8 @@ using PoC.Calendar.Data;
 namespace PoC.Calendar.Data.Migrations
 {
     [DbContext(typeof(CalendarDbContext))]
-    [Migration("20210402105408_AddDefaultData")]
-    partial class AddDefaultData
+    [Migration("20210403074655_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,9 +24,7 @@ namespace PoC.Calendar.Data.Migrations
             modelBuilder.Entity("PoC.Calendar.Data.Model.Appointment", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("End")
                         .HasColumnType("datetime2");
@@ -46,43 +44,43 @@ namespace PoC.Calendar.Data.Migrations
                         new
                         {
                             Id = 1,
-                            End = new DateTime(2021, 3, 31, 0, 0, 0, 0, DateTimeKind.Local),
-                            Start = new DateTime(2021, 3, 31, 0, 0, 0, 0, DateTimeKind.Local),
+                            End = new DateTime(2021, 4, 1, 0, 0, 0, 0, DateTimeKind.Local),
+                            Start = new DateTime(2021, 4, 1, 0, 0, 0, 0, DateTimeKind.Local),
                             Text = "Birthday"
                         },
                         new
                         {
                             Id = 2,
-                            End = new DateTime(2021, 3, 23, 0, 0, 0, 0, DateTimeKind.Local),
-                            Start = new DateTime(2021, 3, 22, 0, 0, 0, 0, DateTimeKind.Local),
+                            End = new DateTime(2021, 3, 24, 0, 0, 0, 0, DateTimeKind.Local),
+                            Start = new DateTime(2021, 3, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             Text = "Day off"
                         },
                         new
                         {
                             Id = 3,
-                            End = new DateTime(2021, 3, 25, 0, 0, 0, 0, DateTimeKind.Local),
-                            Start = new DateTime(2021, 3, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            End = new DateTime(2021, 3, 26, 0, 0, 0, 0, DateTimeKind.Local),
+                            Start = new DateTime(2021, 3, 24, 0, 0, 0, 0, DateTimeKind.Local),
                             Text = "Work from home"
                         },
                         new
                         {
                             Id = 4,
-                            End = new DateTime(2021, 4, 2, 12, 0, 0, 0, DateTimeKind.Local),
-                            Start = new DateTime(2021, 4, 2, 10, 0, 0, 0, DateTimeKind.Local),
+                            End = new DateTime(2021, 4, 3, 12, 0, 0, 0, DateTimeKind.Local),
+                            Start = new DateTime(2021, 4, 3, 10, 0, 0, 0, DateTimeKind.Local),
                             Text = "Online meeting"
                         },
                         new
                         {
                             Id = 5,
-                            End = new DateTime(2021, 4, 2, 13, 0, 0, 0, DateTimeKind.Local),
-                            Start = new DateTime(2021, 4, 2, 10, 0, 0, 0, DateTimeKind.Local),
+                            End = new DateTime(2021, 4, 3, 13, 0, 0, 0, DateTimeKind.Local),
+                            Start = new DateTime(2021, 4, 3, 10, 0, 0, 0, DateTimeKind.Local),
                             Text = "Skype call"
                         },
                         new
                         {
                             Id = 6,
-                            End = new DateTime(2021, 4, 2, 14, 30, 0, 0, DateTimeKind.Local),
-                            Start = new DateTime(2021, 4, 2, 14, 0, 0, 0, DateTimeKind.Local),
+                            End = new DateTime(2021, 4, 3, 14, 30, 0, 0, DateTimeKind.Local),
+                            Start = new DateTime(2021, 4, 3, 14, 0, 0, 0, DateTimeKind.Local),
                             Text = "Dentist appointment"
                         });
                 });

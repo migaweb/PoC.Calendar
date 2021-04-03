@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace PoC.Calendar.Api.Dtos
+namespace PoC.Calendar.WASM.Shared
 {
-  public class EventDto : EventBaseDto 
+  public class EventDto : EventBaseDto
   {
     [Required]
     public int Id { get; set; }
@@ -20,5 +20,4 @@ namespace PoC.Calendar.Api.Dtos
     [Required]
     public string Text { get; set; }
   }
-
 }

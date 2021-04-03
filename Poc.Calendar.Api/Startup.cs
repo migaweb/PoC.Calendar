@@ -51,6 +51,8 @@ namespace Poc.Calendar.Api
 
       app.UseHttpsRedirection();
 
+      app.UseCors("CorsPolicyAllowAll");
+
       app.UseRouting();
 
       app.UseAuthorization();

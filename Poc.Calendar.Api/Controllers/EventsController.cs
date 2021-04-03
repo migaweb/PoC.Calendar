@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PoC.Calendar.Data;
+using PoC.Calendar.WASM.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace PoC.Calendar.Api.Controllers
     public async Task<IActionResult> GetAllAppointments(int id)
     {
       var eventEntities = await _context.Events.Where(e => e.CalendarId == id).ToListAsync();
-      var eventDtos = _mapper.Map<IList<Dtos.EventDto>>(eventEntities);
+      var eventDtos = _mapper.Map<IList<EventDto>>(eventEntities);
 
       return Ok(eventDtos);
     }
@@ -39,11 +40,11 @@ namespace PoC.Calendar.Api.Controllers
 
       if (eventEntity == null) return NotFound();
 
-      return Ok(_mapper.Map<Dtos.EventDto>(eventEntity));
+      return Ok(_mapper.Map<EventDto>(eventEntity));
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateEvent(Dtos.EventBaseDto eventBaseDto)
+    public async Task<IActionResult> CreateEvent(EventBaseDto eventBaseDto)
     {
       if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -53,11 +54,11 @@ namespace PoC.Calendar.Api.Controllers
 
       return CreatedAtRoute(nameof(GetEventById),
                             new { id = eventEntity.Id },
-                            _mapper.Map<Dtos.EventDto>(eventEntity));
+                            _mapper.Map<EventDto>(eventEntity));
     }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> UpdateEvent(int id, [FromBody] Dtos.EventBaseDto eventBaseDto)
+    public async Task<IActionResult> UpdateEvent(int id, [FromBody] EventBaseDto eventBaseDto)
     {
       if (!ModelState.IsValid) return BadRequest(ModelState);
 

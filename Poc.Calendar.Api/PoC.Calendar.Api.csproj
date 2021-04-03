@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PoC.Calendar.Data\PoC.Calendar.Data.csproj" />
+    <ProjectReference Include="..\PoC.Calendar.WASM\Shared\PoC.Calendar.WASM.Shared.csproj" />
   </ItemGroup>
 
 </Project>

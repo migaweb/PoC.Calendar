@@ -9,5 +9,6 @@ namespace PoC.Calendar.Common.Settings
   public class CalendarSettings
   {
     public int CalendarId { get; set; }
+    public string CalendarApiBaseUrl { get; set; }
   }
 }

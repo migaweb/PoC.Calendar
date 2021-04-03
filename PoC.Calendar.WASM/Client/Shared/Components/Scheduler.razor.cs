@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using PoC.Calendar.WASM.Client.DataAccess;
+using PoC.Calendar.WASM.Client.Hubs;
 using PoC.Calendar.WASM.Client.Pages;
 using PoC.Calendar.WASM.Shared;
 using Radzen;
@@ -14,7 +15,10 @@ namespace PoC.Calendar.WASM.Client.Shared.Components
   public partial class Scheduler : ComponentBase
   {
     #region Injections
-    
+
+    [CascadingParameter]
+    public CalendarHubManager CalendarHubManager { get; set; }
+
     [Inject]
     public DialogService DialogService { get; set; }
 
@@ -29,6 +33,36 @@ namespace PoC.Calendar.WASM.Client.Shared.Components
 
     private RadzenScheduler<Appointment> scheduler;
     Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
+
+    protected override void OnInitialized()
+    {
+      base.OnInitialized();
+      CalendarHubManager.AppointmentsChanged += CalendarHubManagerAppointmentsChanged;
+    }
+
+    private async void CalendarHubManagerAppointmentsChanged(object sender, AppointmentsChangedEventArgs e)
+    {
+      if (e.Data == null) {
+        // Deleteted appointment
+        await scheduler.Reload();
+        return;
+      }
+
+      var existingAppointment = Appointments.FirstOrDefault(a => a.Id == e.Data.Id);
+
+      if (existingAppointment == null)
+      {
+        Appointments.Add(e.Data);
+        await scheduler.Reload();
+        return;
+      }
+
+      existingAppointment.Text = e.Data.Text;
+      existingAppointment.Start = e.Data.Start;
+      existingAppointment.End = e.Data.End;
+
+      await scheduler.Reload();
+    }
 
     async Task LoadData(SchedulerLoadDataEventArgs args)
     {
@@ -50,9 +84,9 @@ namespace PoC.Calendar.WASM.Client.Shared.Components
 
         if (appointment != null)
         {
-          Appointments.Add(appointment);
+          //Appointments.Add(appointment);
           // Either call the Reload method or reassign the Data property of the Scheduler
-          await scheduler.Reload();
+          //await scheduler.Reload();
         }
         else
         {
@@ -76,7 +110,7 @@ namespace PoC.Calendar.WASM.Client.Shared.Components
       if (result == null)
       {
         // Deleted
-        await scheduler.Reload();
+        //await scheduler.Reload();
         return;
       }
       else if ( !(await AppointmentsRepository.UpdateAppointment(args.Data)) )

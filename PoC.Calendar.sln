@@ -20,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Poc.Calendar.Infra", "Poc.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoC.Calendar.Common", "PoC.Calendar.Common\PoC.Calendar.Common.csproj", "{1352DC02-44DB-43DB-9A46-3D84B571E22D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoC.Calendar.Api", "Poc.Calendar.Api\PoC.Calendar.Api.csproj", "{A8DC2012-20AE-4AA5-A77A-78A143035662}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoC.Calendar.Api", "Poc.Calendar.Api\PoC.Calendar.Api.csproj", "{A8DC2012-20AE-4AA5-A77A-78A143035662}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -8,6 +8,7 @@ using PoC.Calendar.Common.MassTransit;
 using PoC.Calendar.Common.Settings;
 using PoC.Calendar.Data;
 using PoC.Calendar.WASM.Server.CloudStore;
+using PoC.Calendar.WASM.Server.Hubs;
 using PoC.Calendar.WASM.Server.Profiles;
 
 namespace PoC.Calendar.WASM.Server
@@ -28,6 +29,8 @@ namespace PoC.Calendar.WASM.Server
       services.Configure<CalendarSettings>(Configuration.GetSection("CalendarSettings"));
       services.AddDbContext<CalendarDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CalendarDBConnection")));
       services.AddMassTransitWithRabbitMQ();
+
+      services.AddSignalR();
 
       services.AddControllersWithViews();
       services.AddRazorPages();
@@ -63,6 +66,7 @@ namespace PoC.Calendar.WASM.Server
         endpoints.MapRazorPages();
         endpoints.MapControllers();
         endpoints.MapFallbackToFile("index.html");
+        endpoints.MapHub<CalendarHub>("/hubs/calendar");
       });
     }
   }

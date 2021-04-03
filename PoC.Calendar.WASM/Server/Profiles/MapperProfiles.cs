@@ -10,6 +10,9 @@ namespace PoC.Calendar.WASM.Server.Profiles
       CreateMap<Shared.AppointmentBase, Data.Model.Appointment>();
       CreateMap<Shared.AppointmentBase, Shared.EventBaseDto>();
       CreateMap<Shared.EventDto, Shared.Appointment>();
+
+      CreateMap<Common.Contracts.EventItemCreated, Data.Model.Appointment>();
+      CreateMap<Common.Contracts.EventItemUpdated, Data.Model.Appointment>();
     }
   }
 }

@@ -10,6 +10,9 @@ namespace PoC.Calendar.Api.Profiles
     {
       CreateMap<Data.Model.Event, EventDto>();
       CreateMap<EventBaseDto, Data.Model.Event>();
+      CreateMap<Data.Model.Event, Common.Contracts.EventItemCreated>();
+      CreateMap<Data.Model.Event, Common.Contracts.EventItemUpdated>();
+      CreateMap<Data.Model.Event, Common.Contracts.EventItemDeleted>();
     }
   }
 }

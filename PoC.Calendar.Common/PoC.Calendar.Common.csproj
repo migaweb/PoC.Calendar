@@ -10,8 +10,4 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Poc.Calendar.Api\PoC.Calendar.Api.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,11 +18,13 @@ namespace PoC.Calendar.Api.Controllers
   {
     private readonly EventsDbContext _context;
     private readonly IMapper _mapper;
+    private readonly IPublishEndpoint _publishEndpoint;
 
-    public EventsController(EventsDbContext context, IMapper mapper)
+    public EventsController(EventsDbContext context, IMapper mapper, IPublishEndpoint publishEndpoint)
     {
       _context = context;
       _mapper = mapper;
+      _publishEndpoint = publishEndpoint;
     }
 
     [HttpGet("calendar/{id:int}")]
@@ -52,6 +55,8 @@ namespace PoC.Calendar.Api.Controllers
       await _context.Events.AddAsync(eventEntity);
       await _context.SaveChangesAsync();
 
+      await _publishEndpoint.Publish(_mapper.Map<Common.Contracts.EventItemCreated>(eventEntity));
+
       return CreatedAtRoute(nameof(GetEventById),
                             new { id = eventEntity.Id },
                             _mapper.Map<EventDto>(eventEntity));
@@ -71,6 +76,8 @@ namespace PoC.Calendar.Api.Controllers
       _context.Events.Attach(eventEntity);
       await _context.SaveChangesAsync();
 
+      await _publishEndpoint.Publish(_mapper.Map<Common.Contracts.EventItemUpdated>(eventEntity));
+
       return NoContent();
     }
 
@@ -83,6 +90,8 @@ namespace PoC.Calendar.Api.Controllers
 
       _context.Events.Remove(eventEntity);
       await _context.SaveChangesAsync();
+
+      await _publishEndpoint.Publish(_mapper.Map<Common.Contracts.EventItemDeleted>(eventEntity));
 
       return NoContent();
     }

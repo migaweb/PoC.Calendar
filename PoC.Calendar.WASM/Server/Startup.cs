@@ -1,16 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PoC.Calendar.Common.MassTransit;
 using PoC.Calendar.Common.Settings;
 using PoC.Calendar.Data;
 using PoC.Calendar.WASM.Server.CloudStore;
 using PoC.Calendar.WASM.Server.Profiles;
-using System.Linq;
 
 namespace PoC.Calendar.WASM.Server
 {
@@ -29,6 +27,8 @@ namespace PoC.Calendar.WASM.Server
     {
       services.Configure<CalendarSettings>(Configuration.GetSection("CalendarSettings"));
       services.AddDbContext<CalendarDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CalendarDBConnection")));
+      services.AddMassTransitWithRabbitMQ();
+
       services.AddControllersWithViews();
       services.AddRazorPages();
 

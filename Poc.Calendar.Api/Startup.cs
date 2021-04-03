@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using PoC.Calendar.Api.Profiles;
 using PoC.Calendar.Data;
+using PoC.Calendar.Common.MassTransit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace Poc.Calendar.Api
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddDbContext<EventsDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("EventsDBConnection")));
+      services.AddMassTransitWithRabbitMQ();
       services.AddControllers();
       services.AddSwaggerGen(c =>
       {

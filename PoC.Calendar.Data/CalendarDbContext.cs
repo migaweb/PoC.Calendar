@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PoC.Calendar.Data.Configurations;
 using PoC.Calendar.Data.Model;
-
+using System;
 
 namespace PoC.Calendar.Data
 {

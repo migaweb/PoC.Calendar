@@ -9,5 +9,7 @@ namespace PoC.Calendar.WASM.Shared
   public class Appointment : AppointmentBase
   {
     public int Id { get; set; }
+
+    public bool Deleted { get; set; }
   }
 }

@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using AutoMapper;
+using MassTransit;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using PoC.Calendar.Common.Contracts;
@@ -12,11 +13,13 @@ namespace PoC.Calendar.WASM.Server.Consumers
   {
     private readonly CalendarDbContext _calendarDbContext;
     private readonly IHubContext<CalendarHub> _calendarHub;
+    private readonly IMapper _mapper;
 
-    public EventItemDeletedConsumer(CalendarDbContext calendarDbContext, IHubContext<CalendarHub> calendarHub)
+    public EventItemDeletedConsumer(CalendarDbContext calendarDbContext, IHubContext<CalendarHub> calendarHub, IMapper mapper)
     {
       _calendarDbContext = calendarDbContext;
       _calendarHub = calendarHub;
+      _mapper = mapper;
     }
     public async Task Consume(ConsumeContext<EventItemDeleted> context)
     {
@@ -29,7 +32,9 @@ namespace PoC.Calendar.WASM.Server.Consumers
       _calendarDbContext.Appointments.Remove(appointmentEntity);
       _calendarDbContext.SaveChanges();
 
-      await _calendarHub.Clients.All.SendAsync("appointmentsChanged", null);
+      var appointmentDto = _mapper.Map<Shared.Appointment>(appointmentEntity);
+      appointmentDto.Deleted = true;
+      await _calendarHub.Clients.All.SendAsync("appointmentsChanged", appointmentDto);
     }
   }
 }

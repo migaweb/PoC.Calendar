@@ -32,7 +32,7 @@ namespace PoC.Calendar.WASM.Client.Shared.Components
     public IList<Appointment> Appointments { get; set; } = new List<Appointment>();
 
     private RadzenScheduler<Appointment> scheduler;
-    Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
+    private bool _eventsLoaded = false;
 
     protected override void OnInitialized()
     {
@@ -43,12 +43,17 @@ namespace PoC.Calendar.WASM.Client.Shared.Components
     private async void CalendarHubManagerAppointmentsChanged(object sender, AppointmentsChangedEventArgs e)
     {
       if (e.Data == null) {
-        // Deleteted appointment
-        await scheduler.Reload();
         return;
       }
 
       var existingAppointment = Appointments.FirstOrDefault(a => a.Id == e.Data.Id);
+
+      if (e.Data.Deleted && existingAppointment != null)
+      {
+        Appointments.Remove(existingAppointment);
+        await scheduler.Reload();
+        return;
+      }
 
       if (existingAppointment == null)
       {
@@ -66,9 +71,13 @@ namespace PoC.Calendar.WASM.Client.Shared.Components
 
     async Task LoadData(SchedulerLoadDataEventArgs args)
     {
-      var startDate = args.Start;
-      var endDate = args.End;
-      Appointments = await AppointmentsRepository.GetAppointmentsAsync(startDate, endDate);
+      if (!_eventsLoaded)
+      {
+        var startDate = args.Start;
+        var endDate = args.End;
+        Appointments = await AppointmentsRepository.GetAppointmentsAsync(startDate, endDate);
+        _eventsLoaded = true;
+      }
     }
 
     async Task OnSlotSelect(SchedulerSlotSelectEventArgs args)

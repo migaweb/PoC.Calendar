@@ -22,6 +22,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoC.Calendar.Common", "PoC.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoC.Calendar.Api", "Poc.Calendar.Api\PoC.Calendar.Api.csproj", "{A8DC2012-20AE-4AA5-A77A-78A143035662}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoC.Calendar.MassInsert", "Poc.Calendar.MassInsert\PoC.Calendar.MassInsert.csproj", "{3577BC4E-B1CF-43E8-BF1C-8BC72EA93EC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{A8DC2012-20AE-4AA5-A77A-78A143035662}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8DC2012-20AE-4AA5-A77A-78A143035662}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8DC2012-20AE-4AA5-A77A-78A143035662}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3577BC4E-B1CF-43E8-BF1C-8BC72EA93EC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3577BC4E-B1CF-43E8-BF1C-8BC72EA93EC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3577BC4E-B1CF-43E8-BF1C-8BC72EA93EC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3577BC4E-B1CF-43E8-BF1C-8BC72EA93EC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
